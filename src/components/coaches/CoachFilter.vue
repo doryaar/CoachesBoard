@@ -13,6 +13,10 @@
       <input type="checkbox" id="career" checked @change="setFilter">
       <label for="career">Career</label>
     </span>
+    <span class="filter-option">
+      <label for="name">Search By Text:</label>
+      <input type="text" id="name" @change="setFilter" v-model.trim="checkboxes.name">
+    </span>
   </base-card>
 </template>
 
@@ -21,24 +25,33 @@ export default {
   emits: ['change-filter'],
   data() {
     return {
-      filters: {
+      checkboxes: {
         frontend: true,
         backend: true,
         career: true,
+        name: '',
+        price: null
       }
     };
+  },
+  watch: {
+    checkboxes() {
+      if (this.checkboxes.name === false) {
+        this.checkboxes.name = '';
+      }
+    }
   },
   methods: {
     setFilter(event) {
       const inputId = event.target.id;
       const isActive = event.target.checked;
-      const updatedFilters = {
-        ...this.filters,
+      const updatedCheckboxes = {
+        ...this.checkboxes,
         [inputId]: isActive
       };
-      this.filters = updatedFilters;
-      this.$emit('change-filter', updatedFilters);
-    }
+      this.checkboxes = updatedCheckboxes;
+      this.$emit('change-filter', updatedCheckboxes);
+    },
   }
 }
 </script>

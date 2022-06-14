@@ -51,6 +51,7 @@ export default {
         frontend: true,
         backend: true,
         career: true,
+        name: '',
       }
     };
   },
@@ -64,6 +65,9 @@ export default {
     filterCoaches() {
       const coaches = this.$store.getters['coaches/coaches'];
       return coaches.filter(coach => {
+        if(this.activeFilters.name && (coach.firstName.toLowerCase().includes(this.activeFilters.name.toLowerCase()) || coach.lastName.toLowerCase().includes(this.activeFilters.name.toLowerCase()))) {
+          return true;
+        }
         if(this.activeFilters.frontend && coach.areas.includes('frontend')) {
           return true;
         }
