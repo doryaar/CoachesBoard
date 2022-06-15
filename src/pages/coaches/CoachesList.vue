@@ -77,6 +77,9 @@ export default {
         if(this.activeFilters.career && coach.areas.includes('career')) {
           return true;
         }
+        if(this.activeFilters.price > coach.hourlyRate) {
+          return true;
+        }
         return false;
       })
     },
